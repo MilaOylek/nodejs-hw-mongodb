@@ -7,39 +7,31 @@ import {
 } from '../services/contacts.service.js';
 import createError from 'http-errors';
 
-export const handleGetAllContacts = async (req, res, next) => {
-  try {
-    const contacts = await getAllContacts();
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully found contacts!',
-      data: contacts,
-    });
-  } catch (error) {
-    next(error);
-  }
+export const handleGetAllContacts = async (_req, res) => {
+  const contacts = await getAllContacts();
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found contacts!',
+    data: contacts,
+  });
 };
 
-export const handleGetContactById = async (req, res, next) => {
-  try {
-    const { contactId } = req.params;
-    const contact = await getContactById(contactId);
+export const handleGetContactById = async (req, res) => {
+  const { contactId } = req.params;
+  const contact = await getContactById(contactId);
 
-    if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
-    }
-
-    res.status(200).json({
-      status: 200,
-      message: `Successfully found contact with id ${contactId}!`,
-      data: contact,
-    });
-  } catch (error) {
-    next(error);
+  if (!contact) {
+    throw createError(404, 'Contact not found');
   }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found contact with id ${contactId}!`,
+    data: contact,
+  });
 };
 
-export const handleCreateContact = async (req, res, next) => {
+export const handleCreateContact = async (req, res) => {
   const { name, phoneNumber, email, isFavourite, contactType } = req.body;
 
   if (!name || !phoneNumber || !contactType) {
@@ -61,7 +53,7 @@ export const handleCreateContact = async (req, res, next) => {
   });
 };
 
-export const handlePatchContact = async (req, res, next) => {
+export const handlePatchContact = async (req, res) => {
   const { contactId } = req.params;
   const updates = req.body;
 
@@ -78,7 +70,7 @@ export const handlePatchContact = async (req, res, next) => {
   });
 };
 
-export const handleDeleteContact = async (req, res, next) => {
+export const handleDeleteContact = async (req, res) => {
   const { contactId } = req.params;
 
   const deleted = await deleteContact(contactId);
