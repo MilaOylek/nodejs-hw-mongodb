@@ -5,7 +5,7 @@ import {
   updateContact,
   deleteContact,
 } from '../services/contacts.service.js';
-import createHttpError from 'http-errors';
+import createError from 'http-errors';
 
 export const handleGetAllContacts = async (req, res, next) => {
   try {
