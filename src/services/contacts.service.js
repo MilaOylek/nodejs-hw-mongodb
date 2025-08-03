@@ -8,14 +8,14 @@ export const getContactById = async (id) => {
   return await Contact.findById(id);
 };
 
-export const createContact = async (payload) => {
-  return await Contact.create(payload);
+export const createContact = async (contactData) => {
+  return await Contact.create(contactData);
 };
 
-export const updateContact = async (id, payload) => {
-  return await Contact.findByIdAndUpdate(id, payload, { new: true });
+export const updateContact = async (contactId, updateData) => {
+  return await Contact.findByIdAndUpdate(contactId, updateData, { new: true });
 };
 
-export const deleteContact = async (id) => {
-  return await Contact.findByIdAndDelete(id);
+export const deleteContact = async (contactId) => {
+  return await Contact.findByIdAndDelete(contactId);
 };
