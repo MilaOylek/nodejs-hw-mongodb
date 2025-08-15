@@ -7,8 +7,25 @@ import {
 } from '../services/contacts.service.js';
 import createError from 'http-errors';
 
-export const handleGetAllContacts = async (_req, res) => {
-  const contacts = await getAllContacts();
+export const handleGetAllContacts = async (req, res) => {
+  const {
+    page = 1,
+    perPage = 10,
+    sortBy = 'name',
+    sortOrder = 'asc',
+    type,
+    isFavourite,
+  } = req.query;
+
+  const contacts = await getAllContacts({
+    page: parseInt(page),
+    perPage: parseInt(perPage),
+    sortBy,
+    sortOrder,
+    type,
+    isFavourite,
+  });
+
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -32,19 +49,7 @@ export const handleGetContactById = async (req, res) => {
 };
 
 export const handleCreateContact = async (req, res) => {
-  const { name, phoneNumber, email, isFavourite, contactType } = req.body;
-
-  if (!name || !phoneNumber || !contactType) {
-    throw createError(400, 'Missing required fields');
-  }
-
-  const newContact = await createContact({
-    name,
-    phoneNumber,
-    email,
-    isFavourite,
-    contactType,
-  });
+  const newContact = await createContact(req.body);
 
   res.status(201).json({
     status: 201,
