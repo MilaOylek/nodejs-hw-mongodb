@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 
-const validateBody = (schema) => (req, _res, next) => {
+export const validateBody = (schema) => (req, _res, next) => {
   const { error } = schema.validate(req.body);
   if (error) {
     next(createError(400, error.details[0].message));
@@ -8,5 +8,3 @@ const validateBody = (schema) => (req, _res, next) => {
   }
   next();
 };
-
-export default validateBody;
