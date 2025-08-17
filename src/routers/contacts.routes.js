@@ -18,26 +18,21 @@ const router = express.Router();
 
 router.get('/', ctrlWrapper(handleGetAllContacts));
 
-router.get(
-  '/contacts/:contactId',
-  isValidId,
-  ctrlWrapper(handleGetContactById),
-);
+router.get('/:contactId', isValidId, ctrlWrapper(handleGetContactById));
+
 router.post(
   '/',
   validateBody(createContactSchema),
   ctrlWrapper(handleCreateContact),
 );
+
 router.patch(
   '/:contactId',
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(handlePatchContact),
 );
-router.delete(
-  '/contacts/:contactId',
-  isValidId,
-  ctrlWrapper(handleDeleteContact),
-);
+
+router.delete('/:contactId', isValidId, ctrlWrapper(handleDeleteContact));
 
 export default router;
