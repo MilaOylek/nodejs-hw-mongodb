@@ -14,7 +14,15 @@ export const handleGetAllContacts = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const { type, isFavourite } = req.query;
 
-  const filter = { type, isFavourite };
+  const filter = {};
+
+  if (isFavourite) {
+    filter.isFavourite = isFavourite === 'true';
+  }
+
+  if (type) {
+    filter.type = type;
+  }
 
   const contacts = await getAllContacts({
     page,
