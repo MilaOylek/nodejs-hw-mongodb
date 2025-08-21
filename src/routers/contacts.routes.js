@@ -13,26 +13,25 @@ import {
   updateContactSchema,
 } from '../validation/contacts.validation.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 
+router.use(authenticate);
+
 router.get('/', ctrlWrapper(handleGetAllContacts));
-
 router.get('/:contactId', isValidId, ctrlWrapper(handleGetContactById));
-
 router.post(
   '/',
   validateBody(createContactSchema),
   ctrlWrapper(handleCreateContact),
 );
-
 router.patch(
   '/:contactId',
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(handlePatchContact),
 );
-
 router.delete('/:contactId', isValidId, ctrlWrapper(handleDeleteContact));
 
 export default router;
