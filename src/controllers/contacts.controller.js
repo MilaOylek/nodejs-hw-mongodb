@@ -55,6 +55,7 @@ export const handleGetContactById = async (req, res) => {
 };
 
 export const handleCreateContact = async (req, res) => {
+  const userId = req.user._id;
   const newContact = await createContact(req.body);
 
   res.status(201).json({

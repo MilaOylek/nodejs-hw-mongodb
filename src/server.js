@@ -16,8 +16,11 @@ export const setupServer = () => {
   app.use(pino());
   app.use(cookieParser());
 
-  app.use('/api/auth', authRouter);
-  app.use('/api/contacts', contactsRouter);
+  app.use('/contacts', contactsRouter);
+  app.use('/auth', authRouter);
+
+  // app.use('/api/auth', authRouter);
+  // app.use('/api/contacts', contactsRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
