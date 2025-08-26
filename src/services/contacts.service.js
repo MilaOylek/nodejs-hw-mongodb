@@ -53,3 +53,21 @@ export const updateContact = async (contactId, updateData, userId) => {
 export const deleteContact = async (contactId, userId) => {
   return await Contact.findOneAndDelete({ _id: contactId, userId });
 };
+
+export const upsertContact = async (contactId, payload, userId) => {
+  const result = await Contact.findOneAndUpdate(
+    { _id: contactId, userId },
+    payload,
+    { new: true, includeResultMetadata: true },
+  );
+
+  if (!result.value) {
+    const newContact = await Contact.create({
+      ...payload,
+      userId,
+    });
+    return { contact: newContact, isNew: true };
+  }
+
+  return { contact: result.value, isNew: false };
+};

@@ -1,7 +1,10 @@
-import { registerUser } from '../services/auth.js';
-import { loginUser } from '../services/auth.js';
-import { refreshUserSession } from '../services/auth.js';
-import { logoutUser } from '../services/auth.js';
+import createHttpError from 'http-errors';
+import {
+  loginUser,
+  logoutUser,
+  refreshUserSession,
+  registerUser,
+} from '../services/auth.js';
 
 export const handleRegisterUser = async (req, res) => {
   const user = await registerUser(req.body);
@@ -18,7 +21,7 @@ export const handleLoginUser = async (req, res) => {
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
-    secure: true,
+    expires: new Date(Date.now() + session.refreshTokenValidUntil),
   });
 
   res.status(200).json({
@@ -42,6 +45,7 @@ export const handleRefreshSession = async (req, res) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     secure: true,
+    expires: new Date(Date.now() + session.refreshTokenValidUntil),
   });
 
   res.status(200).json({

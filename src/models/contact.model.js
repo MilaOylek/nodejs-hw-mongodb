@@ -31,12 +31,13 @@ const contactSchema = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: 'user',
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
-export const Contact = model('Contact', contactSchema);
+export const Contact = model('contacts', contactSchema);
