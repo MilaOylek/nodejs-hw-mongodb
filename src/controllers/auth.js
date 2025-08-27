@@ -21,7 +21,7 @@ export const handleLoginUser = async (req, res) => {
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
-    expires: new Date(Date.now() + session.refreshTokenValidUntil),
+    expires: session.refreshTokenValidUntil,
   });
 
   res.status(200).json({
@@ -45,7 +45,7 @@ export const handleRefreshSession = async (req, res) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     secure: true,
-    expires: new Date(Date.now() + session.refreshTokenValidUntil),
+    expires: session.refreshTokenValidUntil,
   });
 
   res.status(200).json({

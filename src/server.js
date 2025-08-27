@@ -4,7 +4,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import contactsRouter from './routers/contacts.routes.js';
-import router from './routers/index.js';
+// import router from './routers/index.js';
+import apiRouter from './routers/index.js';
 
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -17,9 +18,10 @@ export const setupServer = () => {
   app.use(cors());
   app.use(pino());
   app.use(cookieParser());
+  app.use('/api', apiRouter);
 
-  app.use('/contacts', contactsRouter);
-  app.use('/auth', authRouter);
+  // app.use('/contacts', contactsRouter);
+  // app.use('/auth', authRouter);
 
   // app.use('/api/auth', authRouter);
   // app.use('/api/contacts', contactsRouter);

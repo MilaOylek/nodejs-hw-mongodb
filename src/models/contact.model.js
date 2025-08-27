@@ -4,6 +4,11 @@ const { Schema, model } = mongoose;
 
 const contactSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'user',
+    },
     name: {
       type: String,
       required: true,
@@ -27,11 +32,6 @@ const contactSchema = new Schema(
       enum: ['work', 'home', 'personal'],
       default: 'personal',
       required: true,
-    },
-    userId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'user',
     },
   },
   {

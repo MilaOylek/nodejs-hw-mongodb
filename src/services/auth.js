@@ -3,7 +3,8 @@ import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { Session } from '../models/session.js';
 import crypto from 'crypto';
-import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
+
+import { createSession } from '../utils/createSession.js';
 
 const generateToken = () => crypto.randomBytes(32).toString('hex');
 
@@ -20,7 +21,7 @@ export const registerUser = async (payload) => {
 };
 
 export const loginUser = async (payload) => {
-  const user = await User.findOne({ email: payload.email });
+  const user = await User.findOne({ email: payload.email }).select('+password');
   if (!user) {
     throw createHttpError(401, 'Invalid credentials');
   }
@@ -31,17 +32,8 @@ export const loginUser = async (payload) => {
   }
 
   await Session.deleteOne({ userId: user._id });
-
-  const accessToken = generateToken();
-  const refreshToken = generateToken();
-
-  return await Session.create({
-    userId: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
-  });
+  const session = await createSession(user._id);
+  return session;
 };
 
 export const refreshUserSession = async (refreshToken) => {
@@ -58,17 +50,7 @@ export const refreshUserSession = async (refreshToken) => {
   }
 
   await Session.deleteOne({ _id: session._id });
-
-  const newAccessToken = generateToken();
-  const newRefreshToken = generateToken();
-
-  const newSession = await Session.create({
-    userId: session.userId,
-    accessToken: newAccessToken,
-    refreshToken: newRefreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
-  });
+  const newSession = await createSession(session.userId);
 
   return newSession;
 };
