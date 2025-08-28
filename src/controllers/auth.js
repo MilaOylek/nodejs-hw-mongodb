@@ -12,7 +12,7 @@ export const handleRegisterUser = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user.toObject({ getters: true, virtuals: false }),
+    data: user,
   });
 };
 
