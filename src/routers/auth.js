@@ -1,12 +1,24 @@
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { registerSchema } from '../validation/auth.validation.js';
-import { handleRegisterUser } from '../controllers/auth.js';
-import { loginUserSchema } from '../validation/auth.validation.js';
-import { handleLoginUser } from '../controllers/auth.js';
-import { handleRefreshSession } from '../controllers/auth.js';
-import { handleLogoutUser } from '../controllers/auth.js';
+
+import {
+  registerSchema,
+  loginUserSchema,
+  requestResetEmailSchema,
+  resetPasswordSchema,
+} from '../validation/auth.validation.js';
+
+import {
+  handleRegisterUser,
+  handleLoginUser,
+  handleRefreshSession,
+  handleLogoutUser,
+  sendResetPasswordEmailController,
+  resetPasswordController,
+} from '../controllers/auth.js';
+
+import { upload } from '../middlewares/multer.js';
 
 const router = express.Router();
 
@@ -25,5 +37,17 @@ router.post(
 router.post('/refresh', ctrlWrapper(handleRefreshSession));
 
 router.post('/logout', ctrlWrapper(handleLogoutUser));
+
+router.post(
+  '/send-reset-email',
+  validateBody(requestResetEmailSchema),
+  ctrlWrapper(sendResetPasswordEmailController),
+);
+
+router.post(
+  '/reset-pwd',
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(resetPasswordController),
+);
 
 export default router;

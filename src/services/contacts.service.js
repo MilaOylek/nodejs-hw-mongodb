@@ -58,16 +58,25 @@ export const upsertContact = async (contactId, payload, userId) => {
   const result = await Contact.findOneAndUpdate(
     { _id: contactId, userId },
     payload,
-    { new: true, includeResultMetadata: true },
+    { new: true, upsert: true, includeResultMetadata: true },
   );
 
-  if (!result.value) {
-    const newContact = await Contact.create({
-      ...payload,
-      userId,
-    });
-    return { contact: newContact, isNew: true };
-  }
+  return {
+    contact: result.value,
+    isNew: result?.lastErrorObject?.upserted,
+  };
+};
 
-  return { contact: result.value, isNew: false };
+export const uploadContactsPhoto = async (contactId, file) => {
+  const contact = await getContactById(contactId);
+  if (!contact) {
+    throw createHttpError(404, 'Student not found!');
+  }
+  const filePath = await saveFile(file);
+
+  contact.photo = filePath;
+
+  await contact.save();
+
+  return contact;
 };
