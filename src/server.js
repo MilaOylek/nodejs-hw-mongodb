@@ -18,11 +18,13 @@ export const setupServer = () => {
   app.use(pino());
   app.use(cookieParser());
 
+  app.use('/uploads', express.static(UPLOAD_DIR));
+
+  console.log('📌 Mounting main router...');
+
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
-
-  app.use('/uploads', express.static(UPLOAD_DIR));
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {

@@ -67,6 +67,8 @@ import { upload } from '../middlewares/multer.js';
 
 const router = express.Router();
 
+console.log('✅ Contacts router initialized');
+
 router.use(authenticate);
 
 router.get('/', ctrlWrapper(handleGetAllContacts));

@@ -22,6 +22,8 @@ import { upload } from '../middlewares/multer.js';
 
 const router = express.Router();
 
+console.log('📌 Auth router initialized');
+
 router.post(
   '/register',
   validateBody(registerSchema),
