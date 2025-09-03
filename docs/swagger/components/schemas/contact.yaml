@@ -1,0 +1,42 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: 'MongoDB ObjectId'
+    example: 65e4decdd286b30065d54af9
+  name:
+    type: string
+    description: "Contact's full name"
+    example: John Doe
+  email:
+    type: string
+    format: email
+    description: "Contact's email address"
+    example: johndoe@example.com
+  phone:
+    type: string
+    description: "Contact's phone number"
+    example: '+380931234567'
+  favorite:
+    type: boolean
+    description: 'Whether the contact is marked as favorite'
+    example: false
+  photo:
+    type: string
+    format: uri
+    description: 'Optional photo URL of the contact'
+    example: https://example.com/photos/johndoe.png
+  createdAt:
+    type: string
+    format: date-time
+    description: 'When the contact was created'
+    example: 2025-09-03T12:00:00Z
+  updatedAt:
+    type: string
+    format: date-time
+    description: 'When the contact was last updated'
+    example: 2025-09-03T12:30:00Z
+required:
+  - name
+  - email
+  - phone
