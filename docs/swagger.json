@@ -11,10 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
-      "url": "https://nodejs-hw-mongodb-1-1gvm.onrender.com"
+      "url": "https://nodejs-hw-mongodb-4-dm7c.onrender.com"
     }
   ],
   "tags": [
@@ -30,9 +27,7 @@
   "paths": {
     "/contacts/{contactId}": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get a contact by ID",
         "operationId": "getContact",
         "description": "Get contact by id",
@@ -59,11 +54,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -88,9 +79,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update contact",
         "operationId": "updateContact",
         "description": "Update an existing contact by ID",
@@ -154,11 +143,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -185,9 +170,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Delete a contact",
         "operationId": "deleteContact",
         "description": "Delete an existing contact by ID",
@@ -214,10 +197,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -243,9 +223,7 @@
     },
     "/contacts": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get list of contacts",
         "operationId": "getAllContacts",
         "description": "Get list of contacts with this endpoint",
@@ -290,10 +268,7 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "example": "asc"
             },
             "description": "Sort order (ascending or descending)"
@@ -315,11 +290,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -331,10 +302,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "data",
-                        "page"
-                      ]
+                      "required": ["data", "page"]
                     }
                   }
                 }
@@ -344,9 +312,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Create new contact",
         "operationId": "createContact",
         "description": "Add new contact",
@@ -361,11 +327,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "email",
-                  "phone"
-                ],
+                "required": ["name", "email", "phone"],
                 "properties": {
                   "name": {
                     "type": "string",
@@ -399,11 +361,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -487,11 +445,7 @@
             "example": "2025-09-03T12:30:00Z"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "phone"
-        ]
+        "required": ["name", "email", "phone"]
       }
     },
     "responses": {
@@ -521,10 +475,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",

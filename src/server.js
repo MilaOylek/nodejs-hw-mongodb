@@ -21,14 +21,20 @@ export const setupServer = () => {
 
   app.use('/uploads', express.static(UPLOAD_DIR));
 
+  app.use('/api-docs', swaggerDocs());
+
   console.log('📌 Mounting main router...');
 
   app.use(router);
+
+  app.get('/', (req, res) => {
+    res.send(
+      'API працює. Перейди на <a href="/api-docs">/api-docs</a> для документації.',
+    );
+  });
+
   app.use(notFoundHandler);
   app.use(errorHandler);
-
-  app.use('/uploads', express.static(UPLOAD_DIR));
-  app.use('/api-docs', swaggerDocs());
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
